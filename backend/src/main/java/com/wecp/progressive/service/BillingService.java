@@ -1,6 +1,7 @@
 package com.wecp.progressive.service;
 
 import com.wecp.progressive.entity.Billing;
+import com.wecp.progressive.entity.Patient;
 
 import java.util.List;
 

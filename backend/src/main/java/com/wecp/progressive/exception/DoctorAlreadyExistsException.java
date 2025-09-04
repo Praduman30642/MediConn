@@ -1,4 +1,7 @@
 package com.wecp.progressive.exception;
 
-public class DoctorAlreadyExistsException {
+public class DoctorAlreadyExistsException extends Exception{
+    public DoctorAlreadyExistsException(){
+        super();
+    }
 }
