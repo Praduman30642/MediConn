@@ -13,34 +13,56 @@ import com.wecp.progressive.service.ClinicService;
 public class ClinicServiceImplJpa implements ClinicService {
 
     @Autowired
-    private ClinicRepository cr;
-    public ClinicServiceImplJpa(ClinicRepository cr){
+    ClinicRepository cr;
+
+    public ClinicServiceImplJpa(ClinicRepository cr) {
         this.cr = cr;
-        
-    }
-    @Override
-    public List<Clinic> getAllClinics() throws Exception {
-        return null;
     }
 
     @Override
-    public Clinic getClinicById(int clinicId) throws Exception {
-        return null;
+    public List<Clinic> getAllClinics() {
+     return cr.findAll();
     }
 
     @Override
-    public Integer addClinic(Clinic clinic) throws Exception {
-        return -1;
+    public Clinic getClinicById(int clinicId)  {
+        try {
+            return cr.findById(clinicId).orElseThrow();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
-    public void updateClinic(Clinic clinic) throws Exception {
-        
+    public Integer addClinic(Clinic clinic) {
+     return cr.save(clinic).getClinicId();
+     
     }
 
     @Override
-    public void deleteClinic(int clinicId) throws Exception {
-        
+    public void updateClinic(Clinic clinic){
+       Clinic d=cr.findById(clinic.getClinicId()).orElseThrow();
+       d.setClinicName(clinic.getClinicName());
+       d.setContactNumber(clinic.getContactNumber());
+       d.setDoctorId(clinic.getDoctorId());
+       d.setEstablishedYear(clinic.getEstablishedYear());
+       d.setLocation(clinic.getLocation());
+       cr.save(d);
+    }
+
+    @Override
+    public void deleteClinic(int clinicId) {
+       cr.deleteById(clinicId);
+    }
+
+    @Override
+    public List<Clinic> getAllClinicByLocation(String location) {
+    return cr.findByLocation(location);
+    }
+
+    @Override
+    public List<Clinic> getAllClinicByDoctorId(int doctorId) {
+        return cr.findByDoctorId(doctorId);
     }
 
 }
